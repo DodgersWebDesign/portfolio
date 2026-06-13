@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Design — Dodger Holmstedt</title>
+  <meta name="description" content="3D design work by Dodger Holmstedt." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #141414;
+      --olive: #565449;
+      --bone:  #D8CFBC;
+      --white: #FFFBF4;
+      --sans:  'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    #cursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+    }
+    #cursor svg {
+      width: 30px; height: 30px;
+      animation: cursorPulse 3.5s ease-in-out infinite;
+    }
+    @keyframes cursorPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+      50%       { transform: scale(1.4) rotate(45deg); opacity: 1; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 36px 56px;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+
+    .nav-logo {
+      font-weight: 200;
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bone);
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    .nav-logo:hover { color: var(--white); }
+
+    .nav-back {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--olive);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.4s ease, gap 0.4s ease;
+    }
+    .nav-back:hover { color: var(--bone); gap: 14px; }
+    .nav-back-arrow { font-size: 14px; transition: transform 0.4s ease; }
+    .nav-back:hover .nav-back-arrow { transform: translateX(-3px); }
+
+    .nav-links { display: flex; gap: 40px; align-items: center; }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--olive);
+      text-decoration: none;
+      transition: color 0.4s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 100%;
+      height: 1px;
+      background: var(--bone);
+      transition: right 0.35s ease;
+    }
+    .nav-links a:not(.nav-btn):hover { color: var(--bone); }
+    .nav-links a:not(.nav-btn):hover::after { right: 0; }
+    .nav-links a.nav-btn {
+      color: var(--black);
+      background: var(--white);
+      padding: 8px 18px;
+      letter-spacing: 0.14em;
+      border: 1px solid var(--white);
+      transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+    .nav-links a.nav-btn::after { display: none; }
+    .nav-links a.nav-btn:hover {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* ── STARFIELD ── */
+    #starfield {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      display: block;
+      background: #141414;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 160px 56px 80px;
+      text-align: center;
+      opacity: 0;
+      animation: riseUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+
+    .page-eyebrow {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(48px, 8vw, 110px);
+      font-weight: 100;
+      line-height: 0.92;
+      letter-spacing: -0.025em;
+      color: var(--white);
+    }
+
+    .page-title em {
+      font-style: italic;
+      font-weight: 100;
+      color: var(--bone);
+    }
+
+    /* ── BONE BORDER ── */
+    .bone-border {
+      width: 100%;
+      height: 1px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(86,84,73,0.15);
+    }
+    .bone-border::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, var(--bone), transparent);
+      animation: borderSweep 4s ease-in-out infinite;
+    }
+    @keyframes borderSweep {
+      0%   { left: -60%; }
+      100% { left: 160%; }
+    }
+
+    /* ── FEATURED PIECE ── */
+    .featured {
+      padding: 80px 56px 100px;
+    }
+
+    .featured-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .featured-label.visible { opacity: 1; transform: translateY(0); }
+
+    /* Video container */
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      aspect-ratio: 1080 / 1144;
+      background: #0d0d0d;
+      overflow: hidden;
+      border: 1px solid rgba(86,84,73,0.2);
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 1s ease 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s;
+    }
+    .video-wrap.visible { opacity: 1; transform: translateY(0); }
+
+    .video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Subtle vignette over video */
+    .video-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(20,20,20,0.55) 100%);
+      pointer-events: none;
+    }
+
+    /* Play/pause overlay */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+      cursor: none;
+    }
+    .video-wrap:hover .video-overlay { opacity: 1; }
+    .video-wrap.paused .video-overlay { opacity: 1; }
+
+    .video-play-btn {
+      width: 56px; height: 56px;
+      border: 1px solid rgba(216,207,188,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20,20,20,0.5);
+      backdrop-filter: blur(4px);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .video-wrap:hover .video-play-btn {
+      border-color: var(--bone);
+      background: rgba(20,20,20,0.7);
+    }
+    .video-play-icon {
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 8px 0 8px 14px;
+      border-color: transparent transparent transparent var(--bone);
+      margin-left: 3px;
+      transition: opacity 0.2s ease;
+    }
+    .video-wrap.playing .video-play-icon {
+      border-width: 0;
+      width: 14px; height: 16px;
+      background: var(--bone);
+      margin-left: 0;
+      /* pause icon — two bars via box-shadow */
+      border: none;
+      box-shadow: inset 4px 0 0 var(--black), inset -4px 0 0 var(--black), inset 5px 0 0 var(--bone), inset -5px 0 0 var(--bone);
+    }
+
+    /* ── PROJECT INFO ── */
+    .project-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(86,84,73,0.18);
+      margin-top: 0;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s;
+    }
+    .project-info.visible { opacity: 1; transform: translateY(0); }
+
+    .project-info-left {
+      padding: 48px 56px 56px 0;
+      border-right: 1px solid rgba(86,84,73,0.18);
+    }
+
+    .project-name {
+      font-size: clamp(32px, 4.5vw, 60px);
+      font-weight: 100;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .project-name em {
+      font-style: italic;
+      color: var(--bone);
+    }
+
+    .project-meta-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .project-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .project-meta-label {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+
+    .project-meta-value {
+      font-size: 13px;
+      font-weight: 200;
+      color: var(--bone);
+      letter-spacing: 0.04em;
+    }
+
+    .project-info-right {
+      padding: 48px 0 56px 56px;
+    }
+
+    .project-desc {
+      font-size: 15px;
+      font-weight: 200;
+      line-height: 1.95;
+      color: var(--bone);
+      opacity: 0.8;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--olive);
+      border: 1px solid rgba(86,84,73,0.3);
+      padding: 6px 14px;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .project-tag:hover { color: var(--bone); border-color: rgba(216,207,188,0.35); }
+
+    /* ── MORE COMING ── */
+    .more-section {
+      padding: 80px 56px 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .more-section.visible { opacity: 1; transform: translateY(0); }
+
+    .more-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--olive));
+      margin-bottom: 8px;
+    }
+
+    .more-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+
+    .more-text {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 100;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .more-text em { font-style: italic; color: var(--bone); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(86,84,73,0.18);
+      padding: 34px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+    }
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 200;
+      color: var(--olive);
+      letter-spacing: 0.08em;
+    }
+    .footer-links { display: flex; gap: 36px; }
+    .footer-links a {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--olive);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover { color: var(--bone); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      nav { padding: 24px 28px; }
+      .nav-links a:not(.nav-btn) { display: none; }
+      .page-header { padding: 130px 28px 60px; }
+      .featured { padding: 56px 28px 72px; }
+      .project-info { grid-template-columns: 1fr; }
+      .project-info-left { padding: 40px 0 32px 0; border-right: none; border-bottom: 1px solid rgba(86,84,73,0.18); }
+      .project-info-right { padding: 32px 0 48px 0; }
+      .more-section { padding: 60px 28px 80px; }
+      footer { padding: 28px; flex-direction: column; gap: 18px; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 20px 20px; }
+      .page-header { padding: 110px 20px 48px; }
+      .featured { padding: 44px 20px 60px; }
+      .project-info-left { padding: 32px 0 28px 0; }
+      .project-info-right { padding: 28px 0 44px 0; }
+      .project-meta-row { gap: 28px; }
+      .more-section { padding: 48px 20px 64px; }
+      footer { padding: 20px; }
+      .footer-links { flex-wrap: wrap; gap: 18px; }
+    }
+
+    @media (pointer: coarse) {
+      #cursor { display: none; }
+      body { cursor: auto; }
+      .video-wrap { cursor: pointer; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor">
+    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="15" cy="15" r="1.6" fill="#D8CFBC"/>
+      <g stroke="#D8CFBC" stroke-width="0.7" opacity="0.75">
+        <line x1="15" y1="3"  x2="15" y2="9"/>
+        <line x1="15" y1="21" x2="15" y2="27"/>
+        <line x1="3"  y1="15" x2="9"  y2="15"/>
+        <line x1="21" y1="15" x2="27" y2="15"/>
+        <line x1="7"  y1="7"  x2="11" y2="11"/>
+        <line x1="19" y1="19" x2="23" y2="23"/>
+        <line x1="23" y1="7"  x2="19" y2="11"/>
+        <line x1="11" y1="19" x2="7"  y2="23"/>
+      </g>
+      <circle cx="15" cy="15" r="12" stroke="#D8CFBC" stroke-width="0.35" opacity="0.2"/>
+    </svg>
+  </div>
+
+  <!-- STARFIELD -->
+  <canvas id="starfield"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Dodger Holmstedt</a>
+    <div class="nav-links">
+      <a href="contact.html" class="nav-btn">Contact</a>
+      <a href="https://dodgerswebsites.org" target="_blank">Web Studio</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <p class="page-eyebrow">Work — 3D Design</p>
+    <h1 class="page-title">Three<br><em>dimensions.</em></h1>
+  </header>
+
+  <div class="bone-border"></div>
+
+  <!-- FEATURED PIECE -->
+  <section class="featured">
+
+    <p class="featured-label reveal">Featured Work — 001</p>
+
+    <!-- VIDEO -->
+    <div class="video-wrap reveal" id="videoWrap">
+      <video
+        id="koiVideo"
+        src="koi_pond_final.mp4"
+        loop
+        muted
+        playsinline
+        preload="metadata"
+      ></video>
+      <div class="video-overlay">
+        <div class="video-play-btn">
+          <div class="video-play-icon"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT INFO -->
+    <div class="project-info reveal">
+      <div class="project-info-left">
+        <h2 class="project-name">Koi<br><em>Pond.</em></h2>
+        <div class="project-meta-row">
+          <div class="project-meta-item">
+            <span class="project-meta-label">Year</span>
+            <span class="project-meta-value">2025</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">Duration</span>
+            <span class="project-meta-value">9 weeks</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">Exhibited</span>
+            <span class="project-meta-value">The Gordon Hotel, Eugene OR</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info-right">
+        <p class="project-desc">
+          A rendered animation of a koi pond built entirely in Blender over nine weeks.
+          The piece was displayed at The Gordon Hotel in downtown Eugene for a weekend —
+          a meditative loop of water, light, and motion suspended in a hotel lobby.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">Blender</span>
+          <span class="project-tag">3D Animation</span>
+          <span class="project-tag">Cycles Render</span>
+          <span class="project-tag">Installation</span>
+          <span class="project-tag">200 Frames</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="bone-border"></div>
+
+  <!-- MORE COMING -->
+  <div class="more-section reveal">
+    <div class="more-line"></div>
+    <span class="more-label">More on the way</span>
+    <p class="more-text">New 3D work<br>always <em>in progress.</em></p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2025 Dodger Holmstedt</span>
+    <div class="footer-links">
+      <a href="mailto:dodgerjh@live.com">Email</a>
+      <a href="https://dodgerswebsites.org" target="_blank">Web Studio</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let cx = mx, cy = my;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function moveCursor() {
+    cx += (mx - cx) * 0.1;
+    cy += (my - cy) * 0.1;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    requestAnimationFrame(moveCursor);
+  })();
+
+  // ── STARFIELD ──
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const BG = '#141414';
+
+  function resizeStar() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeStar();
+  window.addEventListener('resize', resizeStar);
+
+  const stars = Array.from({ length: 200 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.3 + 0.1,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * 0.0014 + 0.0004,
+    baseOpacity: Math.random() * 0.7 + 0.08,
+  }));
+
+  const shooters = [];
+  function spawnShooter() {
+    const angle = (Math.random() * 35 + 10) * Math.PI / 180;
+    const speed = Math.random() * 0.002 + 0.0015;
+    shooters.push({
+      x: Math.random() * 0.7, y: Math.random() * 0.4,
+      vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+      len: Math.random() * 0.09 + 0.04,
+      life: 0, maxLife: 140 + Math.random() * 80,
+    });
+  }
+  function scheduleShooter() {
+    setTimeout(() => { spawnShooter(); scheduleShooter(); }, 6000 + Math.random() * 9000);
+  }
+  setTimeout(scheduleShooter, 3000);
+
+  let t = 0;
+  function drawStars() {
+    const W = canvas.width, H = canvas.height;
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+    t += 0.007;
+    stars.forEach(s => {
+      const op = s.baseOpacity * (0.4 + 0.6 * Math.sin(s.phase + t * s.speed * 120));
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(216,207,188,${op})`;
+      ctx.fill();
+    });
+    for (let i = shooters.length - 1; i >= 0; i--) {
+      const sh = shooters[i];
+      sh.life++; sh.x += sh.vx; sh.y += sh.vy;
+      const prog = sh.life / sh.maxLife;
+      const op = prog < 0.1 ? prog / 0.1 : prog > 0.65 ? (1 - prog) / 0.35 : 1;
+      const x1 = sh.x * W, y1 = sh.y * H;
+      const mag = Math.hypot(sh.vx, sh.vy);
+      const x2 = (sh.x - sh.len * sh.vx / mag) * W;
+      const y2 = (sh.y - sh.len * sh.vy / mag) * H;
+      const grad = ctx.createLinearGradient(x2, y2, x1, y1);
+      grad.addColorStop(0, `rgba(216,207,188,0)`);
+      grad.addColorStop(0.5, `rgba(216,207,188,${op * 0.35})`);
+      grad.addColorStop(1, `rgba(255,251,244,${op * 0.85})`);
+      ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x1, y1);
+      ctx.strokeStyle = grad; ctx.lineWidth = 0.9; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x1, y1, 0.9, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,251,244,${op})`; ctx.fill();
+      if (sh.life >= sh.maxLife) shooters.splice(i, 1);
+    }
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+
+  // ── VIDEO ──
+  const videoWrap = document.getElementById('videoWrap');
+  const video = document.getElementById('koiVideo');
+  let playing = false;
+
+  videoWrap.addEventListener('click', () => {
+    if (playing) {
+      video.pause();
+      videoWrap.classList.remove('playing');
+      videoWrap.classList.add('paused');
+    } else {
+      video.play();
+      videoWrap.classList.add('playing');
+      videoWrap.classList.remove('paused');
+    }
+    playing = !playing;
+  });
+
+  // Autoplay when scrolled into view
+  const videoIO = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !playing) {
+      video.play().then(() => {
+        playing = true;
+        videoWrap.classList.add('playing');
+      }).catch(() => {});
+    }
+  }, { threshold: 0.4 });
+  videoIO.observe(videoWrap);
+
+  // ── SCROLL REVEALS ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
