@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Design — Dodger Holmstedt</title>
-  <meta name="description" content="3D design work by Dodger Holmstedt." />
+  <title>By Hand — Dodger Holmstedt</title>
+  <meta name="description" content="Illustration and hand-drawn work by Dodger Holmstedt." />
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="3D Work — Dodger Holmstedt" />
-  <meta property="og:description" content="3D design work by Dodger Holmstedt." />
+  <meta property="og:title"       content="By Hand — Dodger Holmstedt" />
+  <meta property="og:description" content="Illustration and hand-drawn work by Dodger Holmstedt." />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="3D Work — Dodger Holmstedt" />
-  <meta name="twitter:description" content="3D design work by Dodger Holmstedt." />
+  <meta name="twitter:title"      content="By Hand — Dodger Holmstedt" />
+  <meta name="twitter:description" content="Illustration and hand-drawn work by Dodger Holmstedt." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -78,22 +78,6 @@
       transition: color 0.4s ease;
     }
     .nav-logo:hover { color: var(--white); }
-
-    .nav-back {
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--olive);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: color 0.4s ease, gap 0.4s ease;
-    }
-    .nav-back:hover { color: var(--bone); gap: 14px; }
-    .nav-back-arrow { font-size: 14px; transition: transform 0.4s ease; }
-    .nav-back:hover .nav-back-arrow { transform: translateX(-3px); }
 
     .nav-links { display: flex; gap: 40px; align-items: center; }
     .nav-links a {
@@ -165,7 +149,6 @@
       letter-spacing: -0.025em;
       color: var(--white);
     }
-
     .page-title em {
       font-style: italic;
       font-weight: 100;
@@ -194,10 +177,8 @@
       100% { left: 160%; }
     }
 
-    /* ── FEATURED PIECE ── */
-    .featured {
-      padding: 80px 56px 100px;
-    }
+    /* ── FEATURED SECTION ── */
+    .featured { padding: 80px 56px 100px; }
 
     .featured-label {
       font-size: 10px;
@@ -212,83 +193,38 @@
     }
     .featured-label.visible { opacity: 1; transform: translateY(0); }
 
-    /* Video container */
-    .video-wrap {
+    .art-featured {
       position: relative;
       width: 100%;
-      max-width: 720px;
+      max-width: 900px;
       margin: 0 auto;
-      aspect-ratio: 1080 / 1144;
+      aspect-ratio: 16 / 9;
       background: #0d0d0d;
       overflow: hidden;
       border: 1px solid rgba(86,84,73,0.2);
       opacity: 0;
       transform: translateY(32px);
       transition: opacity 1s ease 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s;
+      cursor: none;
     }
-    .video-wrap.visible { opacity: 1; transform: translateY(0); }
+    .art-featured.visible { opacity: 1; transform: translateY(0); }
 
-    .video-wrap video {
+    .art-featured img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: left center;
       display: block;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
+    .art-featured:hover img { transform: scale(1.03); }
 
-    /* Subtle vignette over video */
-    .video-wrap::after {
+    .art-featured::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 60%, rgba(20,20,20,0.55) 100%);
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(20,20,20,0.4) 100%);
       pointer-events: none;
-    }
-
-    /* Play/pause overlay */
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 2;
-      cursor: none;
-    }
-    .video-wrap:hover .video-overlay { opacity: 1; }
-    .video-wrap.paused .video-overlay { opacity: 1; }
-
-    .video-play-btn {
-      width: 56px; height: 56px;
-      border: 1px solid rgba(216,207,188,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(20,20,20,0.5);
-      backdrop-filter: blur(4px);
-      transition: border-color 0.3s ease, background 0.3s ease;
-    }
-    .video-wrap:hover .video-play-btn {
-      border-color: var(--bone);
-      background: rgba(20,20,20,0.7);
-    }
-    .video-play-icon {
-      width: 0; height: 0;
-      border-style: solid;
-      border-width: 8px 0 8px 14px;
-      border-color: transparent transparent transparent var(--bone);
-      margin-left: 3px;
-      transition: opacity 0.2s ease;
-    }
-    .video-wrap.playing .video-play-icon {
-      border-width: 0;
-      width: 14px; height: 16px;
-      background: var(--bone);
-      margin-left: 0;
-      /* pause icon — two bars via box-shadow */
-      border: none;
-      box-shadow: inset 4px 0 0 var(--black), inset -4px 0 0 var(--black), inset 5px 0 0 var(--bone), inset -5px 0 0 var(--bone);
     }
 
     /* ── PROJECT INFO ── */
@@ -296,7 +232,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       border-top: 1px solid rgba(86,84,73,0.18);
-      margin-top: 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s;
@@ -304,35 +242,28 @@
     .project-info.visible { opacity: 1; transform: translateY(0); }
 
     .project-info-left {
-      padding: 48px 56px 56px 0;
+      padding: 40px 40px 48px 0;
       border-right: 1px solid rgba(86,84,73,0.18);
     }
 
     .project-name {
-      font-size: clamp(32px, 4.5vw, 60px);
+      font-size: clamp(28px, 3.5vw, 52px);
       font-weight: 100;
       letter-spacing: -0.02em;
       line-height: 1.05;
       color: var(--white);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .project-name em {
-      font-style: italic;
-      color: var(--bone);
-    }
+    .project-name em { font-style: italic; color: var(--bone); }
 
     .project-meta-row {
       display: flex;
-      gap: 40px;
-      margin-top: 32px;
+      gap: 36px;
+      margin-top: 28px;
       flex-wrap: wrap;
     }
 
-    .project-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .project-meta-item { display: flex; flex-direction: column; gap: 6px; }
 
     .project-meta-label {
       font-size: 9px;
@@ -349,25 +280,19 @@
       letter-spacing: 0.04em;
     }
 
-    .project-info-right {
-      padding: 48px 0 56px 56px;
-    }
+    .project-info-right { padding: 40px 0 48px 40px; }
 
     .project-desc {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 200;
       line-height: 1.95;
       color: var(--bone);
       opacity: 0.8;
-      max-width: 520px;
-      margin-bottom: 40px;
+      max-width: 440px;
+      margin-bottom: 32px;
     }
 
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 10px; }
 
     .project-tag {
       font-size: 10px;
@@ -381,12 +306,100 @@
     }
     .project-tag:hover { color: var(--bone); border-color: rgba(216,207,188,0.35); }
 
-    /* ── WIREFRAME ── */
-    #wireframeCanvas {
+    /* ── GRID SECTION ── */
+    .grid-section { padding: 80px 56px 100px; }
+
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .grid-header.visible { opacity: 1; transform: translateY(0); }
+
+    .grid-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+
+    .grid-count {
+      font-size: 11px;
+      font-weight: 200;
+      font-style: italic;
+      color: var(--olive);
+    }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .art-item {
+      position: relative;
+      background: #0d0d0d;
+      overflow: hidden;
+      border: 1px solid rgba(86,84,73,0.15);
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease, border-color 0.4s ease;
+      cursor: none;
+    }
+    .art-item.visible { opacity: 1; transform: translateY(0); }
+    .art-item:hover  { border-color: rgba(216,207,188,0.25); }
+
+    .art-item.portrait  { aspect-ratio: 3 / 4; }
+    .art-item.landscape { aspect-ratio: 4 / 3; }
+    .art-item.wide      { aspect-ratio: 16 / 9; grid-column: span 2; }
+
+    .art-item:nth-child(2) { transition-delay: 0.08s; }
+    .art-item:nth-child(3) { transition-delay: 0.06s; }
+    .art-item:nth-child(4) { transition-delay: 0.14s; }
+    .art-item:nth-child(5) { transition-delay: 0.10s; }
+
+    .art-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      width: 260px;
-      height: 260px;
-      margin-bottom: 8px;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .art-item:hover img { transform: scale(1.03); }
+
+    .art-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,20,20,0.88) 0%, rgba(20,20,20,0.2) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .art-item:hover .art-item-overlay { opacity: 1; }
+
+    .art-item-title {
+      font-size: 14px;
+      font-weight: 100;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .art-item-title em { font-style: italic; color: var(--bone); }
+
+    .art-item-meta {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--olive);
     }
 
     /* ── MORE COMING ── */
@@ -434,7 +447,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: transparent;
     }
     .footer-copy {
       font-size: 11px;
@@ -454,6 +466,90 @@
     }
     .footer-links a:hover { color: var(--bone); }
 
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #lb-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(20,20,20,0.96);
+    }
+    #lb-img-wrap {
+      position: relative;
+      z-index: 1;
+      transform: scale(0.94);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    #lightbox.open #lb-img-wrap { transform: scale(1); }
+    #lb-img {
+      display: block;
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border: 1px solid rgba(86,84,73,0.2);
+    }
+    #lb-close {
+      position: absolute;
+      top: 28px; right: 32px;
+      z-index: 2;
+      background: none;
+      border: none;
+      cursor: none;
+      color: var(--olive);
+      font-family: var(--sans);
+      font-size: 20px;
+      font-weight: 100;
+      padding: 8px 12px;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+    #lb-close:hover { color: var(--bone); }
+    #lb-prev, #lb-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: none;
+      border: none;
+      cursor: none;
+      color: var(--olive);
+      font-family: var(--sans);
+      font-size: 32px;
+      font-weight: 100;
+      padding: 16px 24px;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+    #lb-prev { left: 12px; }
+    #lb-next { right: 12px; }
+    #lb-prev:hover, #lb-next:hover { color: var(--bone); }
+    #lb-counter {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--olive);
+      white-space: nowrap;
+    }
+
     /* ── KEYFRAMES ── */
     @keyframes fadeIn {
       from { opacity: 0; } to { opacity: 1; }
@@ -469,20 +565,24 @@
       .nav-links a:not(.nav-btn) { display: none; }
       .page-header { padding: 130px 28px 60px; }
       .featured { padding: 56px 28px 72px; }
-      .project-info { grid-template-columns: 1fr; }
-      .project-info-left { padding: 40px 0 32px 0; border-right: none; border-bottom: 1px solid rgba(86,84,73,0.18); }
-      .project-info-right { padding: 32px 0 48px 0; }
+      .project-info { grid-template-columns: 1fr; max-width: 100%; }
+      .project-info-left { padding: 36px 0 28px 0; border-right: none; border-bottom: 1px solid rgba(86,84,73,0.18); }
+      .project-info-right { padding: 28px 0 44px 0; }
+      .grid-section { padding: 56px 28px 80px; }
+      .art-grid { grid-template-columns: 1fr; gap: 14px; }
+      .art-item.wide { grid-column: span 1; }
       .more-section { padding: 60px 28px 80px; }
       footer { padding: 28px; flex-direction: column; gap: 18px; align-items: flex-start; }
     }
 
     @media (max-width: 480px) {
-      nav { padding: 20px 20px; }
+      nav { padding: 20px; }
       .page-header { padding: 110px 20px 48px; }
       .featured { padding: 44px 20px 60px; }
-      .project-info-left { padding: 32px 0 28px 0; }
-      .project-info-right { padding: 28px 0 44px 0; }
-      .project-meta-row { gap: 28px; }
+      .project-info-left { padding: 28px 0 24px 0; }
+      .project-info-right { padding: 24px 0 40px 0; }
+      .grid-section { padding: 44px 20px 64px; }
+      .grid-header { margin-bottom: 36px; }
       .more-section { padding: 48px 20px 64px; }
       footer { padding: 20px; }
       .footer-links { flex-wrap: wrap; gap: 18px; }
@@ -491,7 +591,8 @@
     @media (pointer: coarse) {
       #cursor { display: none; }
       body { cursor: auto; }
-      .video-wrap { cursor: pointer; }
+      .art-item-overlay { opacity: 1; }
+      #lb-close, #lb-prev, #lb-next { cursor: pointer; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -533,8 +634,8 @@
 
   <!-- PAGE HEADER -->
   <header class="page-header">
-    <p class="page-eyebrow">Work — 3D Design</p>
-    <h1 class="page-title">Three<br><em>dimensions.</em></h1>
+    <p class="page-eyebrow">Work — Illustration & Drawing</p>
+    <h1 class="page-title">By<br><em>Hand.</em></h1>
   </header>
 
   <div class="bone-border"></div>
@@ -544,54 +645,35 @@
 
     <p class="featured-label reveal">Featured Work — 001</p>
 
-    <!-- VIDEO -->
-    <div class="video-wrap reveal" id="videoWrap">
-      <video
-        id="koiVideo"
-        src="koi_pond_final.mp4"
-        loop
-        muted
-        playsinline
-        preload="metadata"
-      ></video>
-      <div class="video-overlay">
-        <div class="video-play-btn">
-          <div class="video-play-icon"></div>
-        </div>
-      </div>
+    <div class="art-featured reveal">
+      <img src="byhand/IMG_6401.jpg" alt="Reach — pencil drawing by Dodger Holmstedt" />
     </div>
 
-    <!-- PROJECT INFO -->
     <div class="project-info reveal">
       <div class="project-info-left">
-        <h2 class="project-name">Koi<br><em>Pond.</em></h2>
+        <h2 class="project-name"><em>Reach.</em></h2>
         <div class="project-meta-row">
           <div class="project-meta-item">
             <span class="project-meta-label">Year</span>
             <span class="project-meta-value">2025</span>
           </div>
           <div class="project-meta-item">
-            <span class="project-meta-label">Duration</span>
-            <span class="project-meta-value">9 weeks</span>
-          </div>
-          <div class="project-meta-item">
-            <span class="project-meta-label">Exhibited</span>
-            <span class="project-meta-value">The Gordon Hotel, Eugene OR</span>
+            <span class="project-meta-label">Medium</span>
+            <span class="project-meta-value">Pencil</span>
           </div>
         </div>
       </div>
       <div class="project-info-right">
         <p class="project-desc">
-          A rendered animation of a koi pond built entirely in Blender over nine weeks.
-          The piece was displayed at The Gordon Hotel in downtown Eugene for a weekend —
-          a meditative loop of water, light, and motion suspended in a hotel lobby.
+          Personal illustration work ranging from quick digital studies to
+          finished pencil pieces. Each drawing is an exercise in form, line,
+          and the process of making something by hand — no shortcuts.
         </p>
         <div class="project-tags">
-          <span class="project-tag">Blender</span>
-          <span class="project-tag">3D Animation</span>
-          <span class="project-tag">Cycles Render</span>
-          <span class="project-tag">Installation</span>
-          <span class="project-tag">200 Frames</span>
+          <span class="project-tag">Illustration</span>
+          <span class="project-tag">Pencil</span>
+          <span class="project-tag">Digital</span>
+          <span class="project-tag">Fan Art</span>
         </div>
       </div>
     </div>
@@ -600,27 +682,94 @@
 
   <div class="bone-border"></div>
 
+  <!-- ART GRID -->
+  <section class="grid-section">
+
+    <div class="grid-header reveal">
+      <span class="grid-label">More Work</span>
+      <span class="grid-count">Select pieces — 2024–2025</span>
+    </div>
+
+    <div class="art-grid">
+
+      <div class="art-item portrait reveal">
+        <img src="byhand/fly_color.JPG" alt="飛べ — Fly" loading="lazy" />
+        <div class="art-item-overlay">
+          <p class="art-item-title">飛べ — <em>Fly</em></p>
+          <span class="art-item-meta">Digital · 2025</span>
+        </div>
+      </div>
+
+      <div class="art-item portrait reveal">
+        <img src="byhand/frieren.JPG" alt="Frieren" loading="lazy" />
+        <div class="art-item-overlay">
+          <p class="art-item-title"><em>Frieren</em></p>
+          <span class="art-item-meta">Digital · 2025</span>
+        </div>
+      </div>
+
+      <div class="art-item wide reveal">
+        <img src="byhand/mech_paint.JPG" alt="Mech" loading="lazy" />
+        <div class="art-item-overlay">
+          <p class="art-item-title"><em>Mech</em></p>
+          <span class="art-item-meta">Digital Painting · 2025</span>
+        </div>
+      </div>
+
+      <div class="art-item landscape reveal">
+        <img src="byhand/IMG_1089.JPG" alt="Warrior" loading="lazy" />
+        <div class="art-item-overlay">
+          <p class="art-item-title"><em>Warrior</em></p>
+          <span class="art-item-meta">Pencil · 2025</span>
+        </div>
+      </div>
+
+      <div class="art-item portrait reveal">
+        <img src="byhand/IMG_4106.jpg" alt="Botanical" loading="lazy" />
+        <div class="art-item-overlay">
+          <p class="art-item-title"><em>Botanical</em></p>
+          <span class="art-item-meta">Ink · 2025</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="bone-border"></div>
+
   <!-- MORE COMING -->
   <div class="more-section reveal">
-    <canvas id="wireframeCanvas"></canvas>
+    <div class="more-line"></div>
     <span class="more-label">More on the way</span>
-    <p class="more-text">New 3D work<br>always <em>in progress.</em></p>
+    <p class="more-text">Always drawing,<br>always <em>making.</em></p>
   </div>
 
   <!-- FOOTER -->
   <footer>
     <span class="footer-copy">© 2025 Dodger Holmstedt</span>
     <div class="footer-links">
-      <a href="mailto:dodgerjh@live.com">Email</a>
+      <a href="mailto:fluidwork@dodgerswebsites.org">Email</a>
       <a href="https://dodgerswebsites.org" target="_blank">Web Studio</a>
       <a href="contact.html">Contact</a>
     </div>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <div id="lb-backdrop"></div>
+    <button id="lb-close">&#x2715;</button>
+    <button id="lb-prev">&#x2039;</button>
+    <button id="lb-next">&#x203a;</button>
+    <div id="lb-img-wrap">
+      <img id="lb-img" src="" alt="" />
+    </div>
+    <span id="lb-counter"></span>
+  </div>
+
   <script>
   // ── CURSOR ──
   const cursor = document.getElementById('cursor');
-  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
   let cx = mx, cy = my;
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
   (function moveCursor() {
@@ -631,18 +780,19 @@
     requestAnimationFrame(moveCursor);
   })();
 
-  // ── STARFIELD ──
+  // ── STARFIELD + SKETCH MARKS ──
   const canvas = document.getElementById('starfield');
   const ctx = canvas.getContext('2d');
   const BG = '#141414';
 
-  function resizeStar() {
+  function resize() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-  resizeStar();
-  window.addEventListener('resize', resizeStar);
+  resize();
+  window.addEventListener('resize', resize);
 
+  // Stars
   const stars = Array.from({ length: 200 }, () => ({
     x: Math.random(), y: Math.random(),
     r: Math.random() * 1.3 + 0.1,
@@ -651,6 +801,7 @@
     baseOpacity: Math.random() * 0.7 + 0.08,
   }));
 
+  // Shooting stars
   const shooters = [];
   function spawnShooter() {
     const angle = (Math.random() * 35 + 10) * Math.PI / 180;
@@ -667,12 +818,33 @@
   }
   setTimeout(scheduleShooter, 3000);
 
+  // Floating sketch marks — pencil strokes and dots drifting like dust from a sketchbook
+  function makeSketchMark() {
+    const isDot = Math.random() < 0.28;
+    return {
+      x: Math.random(),
+      y: Math.random(),
+      angle: Math.random() * Math.PI,
+      len: Math.random() * 24 + 6,
+      isDot,
+      dotR: Math.random() * 1.1 + 0.25,
+      life: Math.random(),
+      speed: Math.random() * 0.00035 + 0.00012,
+      drift: (Math.random() - 0.5) * 0.00012,
+      maxOpacity: Math.random() * 0.055 + 0.015,
+      lw: Math.random() * 0.45 + 0.2,
+    };
+  }
+  const marks = Array.from({ length: 32 }, makeSketchMark);
+
   let t = 0;
-  function drawStars() {
+  function draw() {
     const W = canvas.width, H = canvas.height;
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, W, H);
     t += 0.007;
+
+    // Stars
     stars.forEach(s => {
       const op = s.baseOpacity * (0.4 + 0.6 * Math.sin(s.phase + t * s.speed * 120));
       ctx.beginPath();
@@ -680,6 +852,8 @@
       ctx.fillStyle = `rgba(216,207,188,${op})`;
       ctx.fill();
     });
+
+    // Shooting stars
     for (let i = shooters.length - 1; i >= 0; i--) {
       const sh = shooters[i];
       sh.life++; sh.x += sh.vx; sh.y += sh.vy;
@@ -699,133 +873,48 @@
       ctx.fillStyle = `rgba(255,251,244,${op})`; ctx.fill();
       if (sh.life >= sh.maxLife) shooters.splice(i, 1);
     }
-    requestAnimationFrame(drawStars);
-  }
-  drawStars();
 
-  // ── VIDEO ──
-  const videoWrap = document.getElementById('videoWrap');
-  const video = document.getElementById('koiVideo');
-  let playing = false;
+    // Sketch marks
+    marks.forEach(m => {
+      m.life += m.speed;
+      m.y -= m.speed * 0.7;
+      m.x += m.drift;
 
-  videoWrap.addEventListener('click', () => {
-    if (playing) {
-      video.pause();
-      videoWrap.classList.remove('playing');
-      videoWrap.classList.add('paused');
-    } else {
-      video.play();
-      videoWrap.classList.add('playing');
-      videoWrap.classList.remove('paused');
-    }
-    playing = !playing;
-  });
+      if (m.life >= 1 || m.y < -0.05) {
+        Object.assign(m, makeSketchMark());
+        m.life = 0;
+        m.y = 1.05;
+      }
 
-  // Autoplay when scrolled into view
-  const videoIO = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !playing) {
-      video.play().then(() => {
-        playing = true;
-        videoWrap.classList.add('playing');
-      }).catch(() => {});
-    }
-  }, { threshold: 0.4 });
-  videoIO.observe(videoWrap);
+      const p = m.life;
+      let op;
+      if      (p < 0.12) op = p / 0.12;
+      else if (p < 0.72) op = 1;
+      else               op = (1 - p) / 0.28;
+      op *= m.maxOpacity;
 
-  // ── WIREFRAME ICOSAHEDRON ──
-  (function() {
-    const el = document.getElementById('wireframeCanvas');
-    if (!el) return;
-    const dpr = window.devicePixelRatio || 1;
-    const SIZE = 260;
-    el.width  = SIZE * dpr;
-    el.height = SIZE * dpr;
-    const ctx = el.getContext('2d');
-    ctx.scale(dpr, dpr);
+      ctx.strokeStyle = `rgba(216,207,188,${op})`;
+      ctx.fillStyle   = `rgba(216,207,188,${op})`;
 
-    const φ = (1 + Math.sqrt(5)) / 2;
-    const n = Math.sqrt(1 + φ * φ);
-    const V = [
-      [-1,φ,0],[1,φ,0],[-1,-φ,0],[1,-φ,0],
-      [0,-1,φ],[0,1,φ],[0,-1,-φ],[0,1,-φ],
-      [φ,0,-1],[φ,0,1],[-φ,0,-1],[-φ,0,1],
-    ].map(v => [v[0]/n, v[1]/n, v[2]/n]);
-
-    const FACES = [
-      [0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],
-      [1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],
-      [3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],
-      [4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1],
-    ];
-
-    const edgeSet = new Set();
-    const EDGES = [];
-    FACES.forEach(([a,b,c]) => {
-      [[a,b],[b,c],[a,c]].forEach(([i,j]) => {
-        const k = Math.min(i,j) + '_' + Math.max(i,j);
-        if (!edgeSet.has(k)) { edgeSet.add(k); EDGES.push([i,j]); }
-      });
-    });
-
-    let rotY = 0;
-    let mx = 0, my = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX / window.innerWidth  - 0.5;
-      my = e.clientY / window.innerHeight - 0.5;
-    });
-
-    function ry(v, a) {
-      const c = Math.cos(a), s = Math.sin(a);
-      return [v[0]*c + v[2]*s, v[1], -v[0]*s + v[2]*c];
-    }
-    function rx(v, a) {
-      const c = Math.cos(a), s = Math.sin(a);
-      return [v[0], v[1]*c - v[2]*s, v[1]*s + v[2]*c];
-    }
-
-    function draw() {
-      requestAnimationFrame(draw);
-      rotY += 0.004;
-
-      const angY = rotY + mx * 0.5;
-      const angX = 0.3  + my * 0.4;
-      const cx = SIZE / 2, cy = SIZE / 2;
-      const scale = SIZE * 0.36;
-      const fov   = 3.5;
-
-      ctx.clearRect(0, 0, SIZE, SIZE);
-
-      const pts = V.map(v => {
-        let r = ry(v, angY);
-        r = rx(r, angX);
-        const z = r[2] + fov;
-        return { x: (r[0]/z)*scale + cx, y: (r[1]/z)*scale + cy, z: r[2] };
-      });
-
-      EDGES.forEach(([i,j]) => {
-        const a = pts[i], b = pts[j];
-        const avgZ = (a.z + b.z) / 2;
-        const op = 0.07 + 0.52 * ((avgZ + 1) / 2);
+      if (m.isDot) {
         ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = `rgba(216,207,188,${op})`;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      });
-
-      pts.forEach(p => {
-        if (p.z < 0.15) return;
-        const op = 0.2 + 0.6 * ((p.z + 1) / 2);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(216,207,188,${op})`;
+        ctx.arc(m.x * W, m.y * H, m.dotR, 0, Math.PI * 2);
         ctx.fill();
-      });
-    }
+      } else {
+        const hw = Math.cos(m.angle) * m.len * 0.5;
+        const hh = Math.sin(m.angle) * m.len * 0.5;
+        const px = m.x * W, py = m.y * H;
+        ctx.lineWidth = m.lw;
+        ctx.beginPath();
+        ctx.moveTo(px - hw, py - hh);
+        ctx.lineTo(px + hw, py + hh);
+        ctx.stroke();
+      }
+    });
 
-    draw();
-  })();
+    requestAnimationFrame(draw);
+  }
+  draw();
 
   // ── SCROLL REVEALS ──
   const reveals = document.querySelectorAll('.reveal');
@@ -837,6 +926,58 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => io.observe(el));
+
+  // ── LIGHTBOX ──
+  const lb        = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lb-img');
+  const lbCounter = document.getElementById('lb-counter');
+  const galleryImgs = [...document.querySelectorAll('.art-item img, .art-featured img')];
+  let lbIdx = 0;
+
+  function lbOpen(idx) {
+    lbIdx = idx;
+    lbImg.src = galleryImgs[idx].src;
+    lbImg.alt = galleryImgs[idx].alt;
+    lbCounter.textContent = `${idx + 1}  /  ${galleryImgs.length}`;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function lbClose() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbStep(dir) {
+    lbIdx = (lbIdx + dir + galleryImgs.length) % galleryImgs.length;
+    lbImg.src = galleryImgs[lbIdx].src;
+    lbImg.alt = galleryImgs[lbIdx].alt;
+    lbCounter.textContent = `${lbIdx + 1}  /  ${galleryImgs.length}`;
+  }
+
+  galleryImgs.forEach((img, i) => {
+    const parent = img.closest('.art-item, .art-featured');
+    if (parent) parent.addEventListener('click', () => lbOpen(i));
+  });
+
+  document.getElementById('lb-backdrop').addEventListener('click', lbClose);
+  document.getElementById('lb-close').addEventListener('click', lbClose);
+  document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbStep(-1); });
+  document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbStep(1); });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     lbClose();
+    if (e.key === 'ArrowLeft')  lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+
+  let lbTouchX = null;
+  lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(dx) > 40) lbStep(dx < 0 ? 1 : -1);
+    lbTouchX = null;
+  });
   </script>
 </body>
 </html>
