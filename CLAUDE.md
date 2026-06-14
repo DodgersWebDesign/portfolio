@@ -56,7 +56,7 @@ Font: Jost (100/200/300 weights + italic)
 
 ## Session Log
 <!-- One-line entries, newest first. Format: YYYY-MM-DD — what changed -->
-- 2026-06-14 — Built byhand.html; added lightbox to byhand+posters; floating sketch marks ambient; image compression; lazy loading; OG tags; favicon; prefers-reduced-motion on all pages; pushed to GitHub; deployed to dodgerportfolio.com
+- 2026-06-14 — Built byhand.html; added lightbox to byhand+posters; floating sketch marks ambient; image compression; lazy loading; OG tags; favicon; prefers-reduced-motion on all pages; pushed to GitHub; deployed to dodgerportfolio.com via Cloudflare Pages (auto-deploys on git push)
 - 2026-06-13 — Built web.html, posters.html, contact.html; added wireframe/chrome/reg marks/node network; wired 10 posters
 - 2026-06-13 — Project started with Claude. Memory system initialized.
 
